@@ -6,6 +6,10 @@
 #include "doctest/doctest.h"
 #endif
 
+/*extern "C" {
+#include "hello.h"
+}
+*/ 
 #include <iostream>
 #include <stdlib.h>
 
@@ -28,6 +32,7 @@ int main() {
             << std::endl;
   std::system("cat ../LICENSE");
 
+  //say_hello();
   // Bring in the dummy class from the example source,
   // just to show that it is accessible from main.cpp.
   Dummy d = Dummy();

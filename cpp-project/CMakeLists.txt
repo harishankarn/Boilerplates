@@ -10,7 +10,7 @@ cmake_minimum_required(VERSION 3.14)
 # Set project name, version and laguages here. (change as needed)
 # Version numbers are available by including "exampleConfig.h" in
 # the source. See exampleConfig.h.in for some more details.
-project(CPP_BOILERPLATE VERSION 1.2.3.4 LANGUAGES CXX)
+project(CPP_BOILERPLATE VERSION 1.2.3.4 LANGUAGES CXX C)
 
 
 # Options: Things you can set via commandline options to cmake (e.g. -DENABLE_LTO=[ON|OFF])
@@ -76,6 +76,23 @@ set_target_properties(
         CXX_STANDARD_REQUIRED YES
         CXX_EXTENSIONS NO
 )
+
+# Below block is completeley added manually to test gtest framework so what this does
+# is it only uses the gtest within the package the cmake refers itself and will work only
+# within this package if needed can download gtest locally in system if you want
+include(FetchContent)
+
+FetchContent_Declare(
+googletest
+URL https://github.com/google/googletest/archive/refs/heads/main.zip
+)
+# For Windows: Prevent overriding the parent project's compiler/linker settings
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+FetchContent_MakeAvailable(googletest)
+add_executable(gtest_test tests/gtest_test.cpp)
+# Manually created a new file called gtest_test.cpp to test if gtest framework is working.
+target_link_libraries(gtest_test PRIVATE gtest_main)
+add_test(NAME GTestSmokeTest COMMAND gtest_test)
 
 # Set up tests (see tests/CMakeLists.txt).
 add_subdirectory(tests)

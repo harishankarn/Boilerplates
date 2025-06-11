@@ -1,0 +1,4 @@
+/tmp/Boilerplates/cpp-project/tests/CMakeFiles/_CMakeLTOTest-CXX/bin/CMakeFiles/foo.dir
+/tmp/Boilerplates/cpp-project/tests/CMakeFiles/_CMakeLTOTest-CXX/bin/CMakeFiles/boo.dir
+/tmp/Boilerplates/cpp-project/tests/CMakeFiles/_CMakeLTOTest-CXX/bin/CMakeFiles/edit_cache.dir
+/tmp/Boilerplates/cpp-project/tests/CMakeFiles/_CMakeLTOTest-CXX/bin/CMakeFiles/rebuild_cache.dir
