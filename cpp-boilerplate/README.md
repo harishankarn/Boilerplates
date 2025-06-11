@@ -1,88 +1,100 @@
-# C++/CMake modern boilerplate
+[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
+[![Build Status](https://travis-ci.org/bsamseth/cpp-project.svg?branch=master)](https://travis-ci.org/bsamseth/cpp-project)
+[![Build status](https://ci.appveyor.com/api/projects/status/g9bh9kjl6ocvsvse/branch/master?svg=true)](https://ci.appveyor.com/project/bsamseth/cpp-project/branch/master)
+[![Coverage Status](https://coveralls.io/repos/github/bsamseth/cpp-project/badge.svg?branch=master)](https://coveralls.io/github/bsamseth/cpp-project?branch=master)
+[![codecov](https://codecov.io/gh/bsamseth/cpp-project/branch/master/graph/badge.svg)](https://codecov.io/gh/bsamseth/cpp-project)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/eb004322b0d146239a57eb242078e179)](https://www.codacy.com/app/bsamseth/cpp-project?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=bsamseth/cpp-project&amp;utm_campaign=Badge_Grade)
+[![Language grade: C/C++](https://img.shields.io/lgtm/grade/cpp/g/bsamseth/cpp-project.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/bsamseth/cpp-project/context:cpp)
+[![Total alerts](https://img.shields.io/lgtm/alerts/g/bsamseth/cpp-project.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/bsamseth/cpp-project/alerts/)
+[![license](https://img.shields.io/badge/license-Unlicense-blue.svg)](https://github.com/bsamseth/cpp-project/blob/master/LICENSE)
+[![Lines of Code](https://tokei.rs/b1/github/bsamseth/cpp-project)](https://github.com/Aaronepower/tokei)
+[![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/bsamseth/cpp-project.svg)](http://isitmaintained.com/project/bsamseth/cpp-project "Average time to resolve an issue")
+[![Percentage of issues still open](http://isitmaintained.com/badge/open/bsamseth/cpp-project.svg)](http://isitmaintained.com/project/bsamseth/cpp-project "Percentage of issues still open")
 
-[![Travis build Status](https://travis-ci.org/Lectem/cpp-boilerplate.svg?branch=master)](https://travis-ci.org/Lectem/cpp-boilerplate)
-[![Appveyor build status](https://ci.appveyor.com/api/projects/status/63mnrl1am9plfc4f/branch/master?svg=true)](https://ci.appveyor.com/project/Lectem/boilerplate/branch/master)
-[![Coverage](https://codecov.io/gh/Lectem/cpp-boilerplate/branch/master/graph/badge.svg)](https://codecov.io/gh/Lectem/cpp-boilerplate)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/69eaa732d3484d7d83bea5464ab38287)](https://www.codacy.com/app/Lectem/cpp-boilerplate?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Lectem/cpp-boilerplate&amp;utm_campaign=Badge_Grade)
-[![Language grade: C/C++](https://img.shields.io/lgtm/grade/cpp/g/Lectem/cpp-boilerplate.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/Lectem/cpp-boilerplate/context:cpp)
-[![CDash dashboard](https://img.shields.io/badge/CDash-Access-blue.svg)](http://my.cdash.org/index.php?project=cpp-boilerplate)
+# Boiler plate for C++ projects
 
-[![Pull requests](https://img.shields.io/github/issues-pr-raw/Lectem/cpp-boilerplate.svg)](https://github.com/Lectem/cpp-boilerplate/pulls)
-[![Opened issues](https://img.shields.io/github/issues-raw/Lectem/cpp-boilerplate.svg)](https://github.com/Lectem/cpp-boilerplate/issues)
-[![Documentation](https://img.shields.io/badge/Documentation-latest-blue.svg)](https://lectem.github.io/cpp-boilerplate)
+This is a boiler plate for C++ projects. What you get:
 
-This is a template for new projects, gives a good CMake base and a few dependencies you most likely want in your project. It also set ups some basic CI builds.
+-   Sources, headers and mains separated in distinct folders
+-   Use of modern [CMake](https://cmake.org/) for much easier compiling
+-   Setup for tests using [doctest](https://github.com/onqtam/doctest)
+-   Continuous testing with [Travis-CI](https://travis-ci.org/), [Appveyor](https://www.appveyor.com) and [GitHub Actions](https://github.com/features/actions), with support for C++17.
+-   Code coverage reports, including automatic upload to [Coveralls.io](https://coveralls.io/) and/or [Codecov.io](https://codecov.io)
+-   Code documentation with [Doxygen](http://www.stack.nl/~dimitri/doxygen/)
 
-It uses "modern" CMake, ie 3.x paradigms, and should be a good starting point for both people willing to learn it and those that want to update/upgrade their CMakeLists.txt!
+![Demo of usage](https://i.imgur.com/foymVfy.gif)
 
-Everything will not necessarily be useful for new projects, but serves as a learning document where most of the CMake features you will need should be showcased.
+## Structure
+``` text
+.
+├── CMakeLists.txt
+├── app
+│   └── main.cpp
+├── include
+│   ├── example.h
+│   └── exampleConfig.h.in
+├── src
+│   └── example.cpp
+└── tests
+    ├── dummy.cpp
+    └── main.cpp
+```
 
-If you disagree with some pieces of advice given here, please discuss it with me by opening a Github Issue! Enhancements are always welcome.  
+Sources go in [src/](src/), header files in [include/](include/), main programs in [app/](app), and
+tests go in [tests/](tests/) (compiled to `unit_tests` by default).
 
-## Usage
+If you add a new executable, say `app/hello.cpp`, you only need to add the following two lines to [CMakeLists.txt](CMakeLists.txt):
 
-If you want to bootstrap a new project you only need to :
+```cmake
+add_executable(main app/main.cpp)   # Name of exec. and location of file.
+target_link_libraries(main PRIVATE ${LIBRARY_NAME})  # Link the executable to lib built from src/*.cpp (if it uses it).
+```
 
--   If you don't already have your git repository setup
-    -   Simply copy/paste the folder (without the .git folder) and run the createBoilerPlate.sh file. This will create an initial git commit and add the _required_ submodules.
--   Hack CMakeLists.txt and CTestConfig.cmake to change the project name, remove unnecessary parts/comments.
--   Ready to go !
+You can find the example source code that builds the `main` executable in [app/main.cpp](app/main.cpp) under the `Build` section in [CMakeLists.txt](CMakeLists.txt).
+If the executable you made does not use the library in [src/](src), then only the first line is needed.
 
-The CI providers used and that might need some setup :
--   Github actions (no setup required)
--   Travis CI, for GCC / Clang on Linux/MacOS
--   AppVeyor, for MSVC on Windows
--   Codecov.io, for the codecoverage reports
--   CDash, for test and coverage reports using CTest. Can also be used to build nightlies.
 
-## Requirements :
 
--   CMake 3.8.2 (Not needed for all scripts)
--   Git (for the submodules)
--   Any of the CI providers listed above if needed.
+## Building
 
-## Some features/notes :
+Build by making a build directory (i.e. `build/`), run `cmake` in that dir, and then use `make` to build the desired target.
 
--   Scripts lying in the cmake/ folder can be copy/pasted for use in any CMake project
--   Uses c++14
--   CopyDllsForDebug.cmake script : A small wrapper around fixup_bundle to copy DLLs to the output directory on windows
--   LTO.cmake script : Easier link time optimization configuration (should work on all CMake 3.x versions) as it used to be painful to setup.
--   Warnings.cmake script : A wrapper around common warning settings
--   Basic unit-testing using [doctest](https://github.com/onqtam/doctest)
--   Coverage.cmake : Test coverage script to add a 'Coverage' build type to CMake
--   Generating the documentation through TravisCI requires that you setup a Github Token, see <https://docs.travis-ci.com/user/deployment/pages/> .
--   The lgtm.com website already knows about cmake and can build most of the projects without any special configuration. A sample configuration is in this project to show how to tag files and disable unneeded warnings. The external folder is automatically recognized and files are tagged as library.
+Example:
 
-    ## FAQ
+```bash
+mkdir build && cd build
+cmake .. -DCMAKE_BUILD_TYPE=[Debug | Coverage | Release]
+make
+./main
+make test      # Makes and runs the tests.
+make coverage  # Generate a coverage report.
+make doc       # Generate html documentation.
+```
 
-**Q**: I'm new to this CMake stuff, where do I start ?
+## .gitignore
 
-**A**: I would suggest reading [CGold](https://cgold.readthedocs.io) which covers this way better than I could. 
+The [.gitignore](.gitignore) file is a copy of the [Github C++.gitignore file](https://github.com/github/gitignore/blob/master/C%2B%2B.gitignore),
+with the addition of ignoring the build directory (`build/`).
 
-___
+## Services
 
-**Q**: Why can't I link some new libraries I put inside the external folder ?
+If the repository is activated with Travis-CI, then unit tests will be built and executed on each commit.
+The same is true if the repository is activated with Appveyor.
 
-**A**: By default targets are not at the GLOBAL scope, which means your CMakelists.txt might not see it.
-In this case you can either add an alias/imported library or use find_package/library as you would if the library was not in your buildtree.
+If the repository is activated with Coveralls/Codecov, then deployment to Travis will also calculate code coverage and
+upload this to Coveralls.io and/or Codecov.io
 
-___
+## Setup
 
-**Q**: Should I always put my dependencies in the folder external
+### Using the GitHub template
+Click the `Use this template` button to make a new repository from this template.
 
-**A**: Absolutely not ! It is a great place for small libraries, but you probably don't want to have to rebuild big libs every time.
-For those, you can use a package manager such as [Hunter](https://github.com/ruslo/hunter) or simply rely on find_package/library.
-
-___
-
-**Q**: I don't understand why you made the choice of XXXXXX here ?
-
-**A**: Open a new issue !
-
-## External dependencies (using submodules)
-
-Those dependencies can be easily removed by changing the external/CMakelists.txt and cleaning main.cpp.
-
--   [libfmt](https://github.com/fmtlib/fmt) In my opinion the best formating library
--   [spdlog](https://github.com/gabime/spdlog) A logging library based on libfmt
--   [doctest](https://github.com/onqtam/doctest) A test library not as heavy as the others
+### From command line
+When starting a new project, you probably don't want the history of this repository. To start fresh you can use
+the [setup script](setup.sh) as follows:
+```bash
+git clone https://github.com/bsamseth/cpp-project  # Or use ssh-link if you like.
+cd cpp-project
+bash setup.sh
+```
+The result is a fresh Git repository with one commit adding all files from the boiler plate.
